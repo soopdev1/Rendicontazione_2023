@@ -1,0 +1,11 @@
+.metadata/
+.classpath
+.project
+.DS_Store
+.tern-project
+.settings/
+target/
+/bin/
+src/main/resources/conf/git_autogen.properties
+/.apt_generated/
+/.apt_generated_tests/

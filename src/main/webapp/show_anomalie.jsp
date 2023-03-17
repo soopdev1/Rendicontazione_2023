@@ -1,0 +1,289 @@
+<%@page import="com.seta.entity.Tutor"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.seta.activity.Action"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<%
+    if (session.getAttribute("username") == null) {
+        response.sendRedirect("login.jsp");
+    } else {
+        int statu = (int) session.getAttribute("tipo");
+        String stat = String.valueOf(statu);
+        if (!Action.isVisibile(stat, "show_anomalie.jsp")) {
+            response.sendRedirect("page_403.html");
+        } else {
+%>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta charset="ISO-8859-1" />
+        <title>Rendicontazione</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <meta content="" name="description" />
+        <meta content="" name="author" />
+        <link rel="shortcut icon" href="assets/seta/img/logos1.png">
+        <!-- BEGIN GLOBAL MANDATORY STYLES -->
+        <link href="assets/seta/fontg/fontsgoogle1.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+        <!-- END GLOBAL MANDATORY STYLES -->
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <link href="assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/clockface/css/clockface.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <link href="assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/jquery-multi-select/css/multi-select.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <!-- END PAGE LEVEL PLUGINS -->
+        <link href="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+
+        <!-- END PAGE LEVEL PLUGINS -->
+        <!-- BEGIN THEME GLOBAL STYLES -->
+        <link href="assets/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+        <link href="assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- END THEME GLOBAL STYLES -->
+        <!-- BEGIN THEME LAYOUT STYLES -->
+        <link href="assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
+        <link href="assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+        <link href="assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+
+
+        <!-- FANCYBOX -->
+        <script type="text/javascript" src="assets/seta/js/jquery-1.10.1.min.js"></script>
+        <script type="text/javascript" src="assets/seta/js/jquery.fancybox.js?v=2.1.5"></script>
+        <link rel="stylesheet" type="text/css" href="assets/seta/css/jquery.fancybox.css?v=2.1.5" media="screen" />
+        <script type="text/javascript" src="assets/seta/js/fancy.js"></script> 
+
+        <link rel="stylesheet" href="AdminLTE-2.4.2/dist/css/AdminLTE.css">
+        <link rel="shortcut icon" href="assets/seta/img/favicon.ico" />   
+        <script type="text/javascript">
+            function submitfor(nameform) {
+                document.forms[nameform].submit();
+            }
+        </script>
+
+
+        <script type="text/javascript">
+            function showmod1(modal, idtext, text) {
+                document.getElementById(modal).className = document.getElementById(modal).className + " in";
+                document.getElementById(idtext).innerHTML = text;
+                document.getElementById(modal).style.display = "block";
+            }
+
+            function dismiss(modal) {
+                document.getElementById(modal).className = "modal fade";
+                document.getElementById(modal).style.display = "none";
+            }
+        </script>
+    </head>
+
+
+    <body  style="background-color: white;">
+        <!--BEGIN HEADER -->
+        <div class="page-container" style="background-color: white;">
+
+            <!-- BEGIN CONTENT BODY -->
+            <!--div class="portlet-title">
+               <div class="caption">
+               <span class="caption-subject font-blue bold">
+               <h3 class="page-title"><strong>  </strong><small> RIMBORSI DESTINATARI</small> </h3>
+               </span>
+               </div>
+               </div-->
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <a class="fa fa-exclamation-circle tooltips" style="cursor: default;"></a>
+                        <span class="caption-subject bold ">Anomalie Aggiornamenti Politiche</span>
+                        <span class="caption-subject font-white "></span>
+                    </div>
+                    <div class="tools">
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <table width="100%" class="table table-responsive table-bordered table-scrollable dataTable no-footerr" id="sample_0"> 
+                        <thead>
+                            <tr>
+                                <th><center>Nome Cognome</center> </th>
+                        <th width='20%'><center>Politica</center> </th>
+                        <th><center>Cod: Colloquio-Percorso</center> </th>
+                        <th width='28%'><center>Errore</center> </th>
+                        <th><center>Data</center> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot hidden>
+                            <tr>
+                                <th><input type="text" class="form-control tf1" name="dest1" placeholder="..."></th>
+                                <th><input type="text" class="form-control tf1" name="dest1" placeholder="..."></th>
+                                <th><input type="text" class="form-control tf1" name="dest1" placeholder="..."></th>
+                                <th><input type="text" class="form-control tf1" name="dest1" placeholder="..."></th>
+                                <th><input type="text" class="form-control tf1" name="dest1" placeholder="..."></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <script src="assets/global/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-file-upload/js/vendor/tmpl.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-file-upload/js/vendor/load-image.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-file-upload/js/vendor/canvas-to-blob.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-file-upload/blueimp-gallery/jquery.blueimp-gallery.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-file-upload/js/jquery.iframe-transport.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-file-upload/js/jquery.fileupload.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-file-upload/js/jquery.fileupload-process.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-file-upload/js/jquery.fileupload-image.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-file-upload/js/jquery.fileupload-audio.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-file-upload/js/jquery.fileupload-video.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-file-upload/js/jquery.fileupload-validate.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js" type="text/javascript"></script>
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+
+    <script src="assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+
+    <script src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
+    <script src="assets/pages/scripts/form-fileupload.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-validation/js/localization/messages_it.js" type="text/javascript"></script>
+    <script src="assets/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
+    <script src="assets/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="assets/pages/scripts/components-select2.min.js" type="text/javascript"></script>   
+    <script src="assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script> 
+    <script src="assets/pages/scripts/components-bootstrap-select.min.js" type="text/javascript"></script>   
+
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <script src="assets/pages/scripts/components-multi-select.min.js" type="text/javascript"></script>
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <script src="assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+    <script src="assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+    <script src="assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+
+    <script src="assets/global/scripts/datatable.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+            jQuery(document).ready(function () {
+                var dt2 = function () {
+                    var g = $("#sample_0");
+                    g.dataTable({
+                        language: {aria: {},
+                            sProcessing: "Ricerca...",
+                            emptyTable: "nessun risultato",
+                            info: "Mostra _START_ di _END_ su _TOTAL_ risultati",
+                            infoEmpty: "Risultato Vuoto",
+                            infoFiltered: "(filtrato su _MAX_)",
+                            lengthMenu: "Mostra _MENU_", search: "Cerca",
+                            zeroRecords: "Nessun risultato trovato",
+                            height: 450,
+                            width: 900,
+                            paginate: {previous: "Precedente", next: "Successivo", last: "Ultimo", first: "Primo"}},
+                        processing: true,
+                        ajax: {
+                            url: "QueryEnte?type=29",
+                            dataSrc: "aaData",
+                            type: "GET"
+                        },
+                        drawCallback: function (settings, json) {
+                            $('.popovers').popover({
+                                container: 'body',
+                            });
+                        },
+                        columnDefs: [
+                            {class: "allineacentro", targets: [0]},
+                            {class: "allineacentro", targets: [1]},
+                            {class: "allineacentro", targets: [2]},
+                            {class: "allineacentro", targets: [3]},
+                            {class: "allineacentro", targets: [4]}
+                        ],
+                        buttons: [
+                            {extend: "excel", className: "btn white btn-outline", text: "<i class='fa fa-file-excel-o'></i> Excel"},
+                            {extend: "colvis", className: "btn white btn-outline", text: "Columns"}]
+                        ,
+                        colReorder: {reorderCallback: function () {
+                                console.log("callback");
+                            }},
+                        lengthMenu: [
+                            [5, 25, 50, 100, -1],
+                            [5, 25, 50, 100, "All"]
+                        ],
+                        //scrollY: 'true',
+                        scrollX: 'true',
+                        pageLength: 5,
+                        order: [],
+                        dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><t><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
+                    });
+                    $(".tf1").keyup(function () {
+                        g.fnFilter(this.value, g.oApi._fnVisibleToColumnIndex(
+                                g.fnSettings(), $(".tf1").index(this)));
+                    });
+                    $(".tf1").each(function (i) {
+                        this.initVal = this.value;
+                    });
+                    $(".tf1").focus(function () {
+                        if (this.className === "form-control")
+                        {
+                            this.className = "form-control";
+                            this.value = "";
+                        }
+                    });
+                    $(".tf1").blur(function (i) {
+                        if (this.value === "")
+                        {
+                            this.className = "form-control";
+                            this.value = this.initVal;
+                        }
+                    });
+                };
+                jQuery().dataTable && dt2();
+            });
+    </script>
+</body>
+</html>
+<%}
+    }%>
+

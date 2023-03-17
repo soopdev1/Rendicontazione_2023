@@ -1,0 +1,16 @@
+.table-scrollable { 
+    overflow-x: visible; 
+    overflow-y: visible; 
+}
+.tabnow {
+    white-space: nowrap;
+}
+.allineadestra{
+    text-align: right;    
+}
+.allineacentro{
+    text-align: center;    
+}
+.btn-pino{
+    display: block;
+}

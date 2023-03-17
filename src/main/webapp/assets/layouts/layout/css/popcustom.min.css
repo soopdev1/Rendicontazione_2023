@@ -1,0 +1,7 @@
+.container {padding:20px;}
+.form-control {width:120px;}
+.popover {max-width:400px;}
+
+#popover-content-logout > * {
+  background-color:#ff0000 !important;
+}

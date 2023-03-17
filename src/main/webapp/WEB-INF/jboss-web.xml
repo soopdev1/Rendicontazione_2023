@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-web>
+    <!--il war va chiamato rendicontazione.war-->
+    <context-root>/rendicontazione</context-root>
+    <!--<virtual-host>sil.politicheattivecalabria.it</virtual-host>-->
+</jboss-web>
